@@ -2,7 +2,14 @@
 
 ## Instructions
 
-**TODO**
+Welcome to an Alchemy Engineering candidate assignment!
+
+To complete this assignment, you will create the API to power the below conditions.  Imagine, if you will, a web
+front end that allows admins to create users, who can then create ping pong players. Your job, should
+you choose to accept it, is to create an application to cover all of the use cases detailed in the documentation.
+
+As you can see, you'd be better suited to use node to complete this task. If you choose not to, however,
+the tests in the `test` directory must still pass.
 
 ## Tests
 

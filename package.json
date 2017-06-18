@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha test/**/*.spec.js"
   },
-  "author": "Steven White <swhitewvu24@gmail.com>",
+  "author": "Steven White <steven@galchemy.codes>",
   "license": "ISC",
   "devDependencies": {
     "babel-eslint": "^7.2.3",
