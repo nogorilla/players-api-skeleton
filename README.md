@@ -11,6 +11,14 @@ you choose to accept it, is to create an application to cover all of the use cas
 As you can see, you'd be better suited to use node to complete this task. If you choose not to, however,
 the tests in the `test` directory must still pass.
 
+TL;DR:
+
+1. Refer to the documentation below
+2. Build the API
+3. Ensure all tests are passing
+4. Send us your code
+5. Win
+
 ## Tests
 
 ```
