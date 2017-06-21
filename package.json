@@ -1,15 +1,16 @@
 {
   "name": "players-api-skeleton",
   "version": "1.0.0",
-  "description": "## Instructions",
-  "main": "index.js",
+  "description": "API that allows admins to create users, who can then create ping pong players",
+  "main": "src/server.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test/**/*.spec.js"
+    "test": "mocha test/**/*.spec.js",
+    "start": "nodemon src/server.js"
   },
-  "author": "Steven White <steven@galchemy.codes>",
+  "author": "Gabriel Smith <gabriel.smith01@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "babel-eslint": "^7.2.3",
@@ -18,7 +19,12 @@
     "eslint": "^4.0.0",
     "lodash": "^4.17.4",
     "mocha": "^3.4.2",
+    "nodemon": "^1.11.0",
     "sinon": "^2.3.4",
     "sinon-chai": "^2.11.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3"
   }
 }
