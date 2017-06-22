@@ -91,9 +91,22 @@ exports.create = (req, res, next) => {
  *   user    - [object] User details
  *   token   - [string] JWT token
  */
-exports.login = (req, res) => {
-  res.json({
-    'controller': 'User',
-    'method': 'login'
-  });
+exports.login = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (!user) {
+      return res.status(401).json(info);
+    }
+    req.logIn(user, (err) => {
+      return res.status(200).json({ 
+        'success': true,
+          'user': {
+            'id': user._id,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name  
+          },
+          'token': 'some-token'
+      });
+    });
+  })(req, res, next);
 };
