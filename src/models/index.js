@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-/**
+/*******
  * Users
- */
+ ******/
 const userSchema = new mongoose.Schema({
   email: { 
     type: String, 
@@ -39,9 +39,35 @@ userSchema.methods.validPassword = function validPassword(password) {
   return bcrypt.compareSync(password, user.password);
 };
 
-const User = mongoose.model('User', userSchema);
+
+/*********
+ * Players
+ *********/
+const playerSchema = new mongoose.Schema({
+  first_name: {
+    type: String,
+    required: [true, 'first name is required'],
+  }, 
+  last_name: {
+    type: String,
+    required: [true, 'last name is required'],
+  }, 
+  rating: {
+    type: String,
+    required: [true, 'rating is required'],
+  }, 
+  handedness: {
+    type: String,
+    enum: ['right', 'left'],
+    default: 'right',
+    required: [true, 'Must be right or left handed']
+  },
+}, { timestamps: true });
+
+const Player = mongoose.model('Player', playerSchema);
+const User   = mongoose.model('User', userSchema);
 
 module.exports = {
-  Player: {},
+  Player: Player,
   User: User
 };

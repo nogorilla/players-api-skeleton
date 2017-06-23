@@ -1,5 +1,5 @@
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 module.exports = {
-  jwtFromRequest: ExtractJwt.fromAuthHeader(),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
   secretOrKey: 'CorrectHorseBatteryStaple'
 }
