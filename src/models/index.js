@@ -1,12 +1,30 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-
+/**
+ * Users
+ */
 const userSchema = new mongoose.Schema({
-  email: { type: String, unique: true },
-  password: String,
-  first_name: String,
-  last_name: String,
+  email: { 
+    type: String, 
+    unique: true,
+    required: [true, 'email is required'] 
+  },
+  password: {
+    type: String,
+    required: [true, 'password is required'],
+  },
+  first_name: {
+    type: String,
+    required: [true, 'first name is required'],
+  },
+  last_name: {
+    type: String,
+    required: [true, 'last name is required'],
+  },
+  players: [
+    { type: mongoose.Schema.Types.ObjectId, ref: 'Player' }
+  ]
 }, { timestamps: true });
 
 userSchema.pre('save', function save(next) {

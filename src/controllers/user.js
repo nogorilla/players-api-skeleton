@@ -1,6 +1,7 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const jwtOptions = require('../config/jwt-options');
+const _ = require('lodash');
 
 const { User } = require('../models');
 
@@ -29,28 +30,8 @@ exports.create = (req, res, next) => {
       err = false,
       msg = [];
 
-  if (!email) {
-    err = true;
-    msg.push('email is required');
-  }
-
-  if (!first_name) {
-    err = true;
-    msg.push('first_name is required');
-  }
-
-  if (!last_name) {
-    err = true;
-    msg.push('last_name is required');
-  }
-
   if (password !== confirm_password) {
-    err = true;
-    msg.push('passwords do not match');
-  }
-
-  if (err) {
-    return res.status(409).json({'msg': msg.join('; ')});
+    return res.status(409).json({ 'message': 'Passwords do not match' });
   } else {
     const user = new User({
       email: email,
@@ -67,17 +48,25 @@ exports.create = (req, res, next) => {
         });
       }
       user.save((err) => {
-        let token = jwt.sign({ id: user.id } , jwtOptions.secretOrKey )
-        return res.status(201).json({
-          'success': true,
-          'user': {
-            'id': user._id,
-            'email': user.email,
-            'first_name': user.first_name,
-            'last_name': user.last_name  
-          },
-          'token': token
-        })
+        if (err) {
+          let errors = [];
+          _.each(err.errors, (err) => {
+            errors.push(err.message);
+          });
+          return res.status(409).json({'message': errors.join('; ')})
+        } else {
+          let token = jwt.sign({ id: user.id } , jwtOptions.secretOrKey )
+          return res.status(201).json({
+            'success': true,
+            'user': {
+              'id': user._id,
+              'email': user.email,
+              'first_name': user.first_name,
+              'last_name': user.last_name  
+            },
+            'token': token
+          })
+        }
       });
     });
   }
