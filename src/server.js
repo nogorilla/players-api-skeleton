@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const jwtOptions = require('./config/jwt-options');
 
 const { User } = require('./models');
 
@@ -24,19 +27,30 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /**
  * Passport
  */
+
 app.use(passport.initialize());
-passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-  User.findOne({ email: email.toLowerCase() }, (err, user) => {
-    if (err) { return done(err); }
-    if (!user) {
-      return done(null, false, { 'message': `Email ${email} not found.` });
+passport.use(new JwtStrategy(jwtOptions, (jwt_payload, done) => {
+  User.findOne({ id: jwt_payload.sub }, (err, user) => {
+    if (err) { return done(err, false); }
+    if (user) {
+      return done(null, user);
+    } else {
+      return done(null, false);
     }
-    if (!user.validPassword(password)) {
-      return done(null, false, { 'message': 'Incorrect password.' });
-    }
-    return done(null, user);
-  });
-}));
+  })
+}))
+// passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+//   User.findOne({ email: email.toLowerCase() }, (err, user) => {
+//     if (err) { return done(err); }
+//     if (!user) {
+//       return done(null, false, { 'message': `Email ${email} not found.` });
+//     }
+//     if (!user.validPassword(password)) {
+//       return done(null, false, { 'message': 'Incorrect password.' });
+//     }
+//     return done(null, user);
+//   });
+// }));
 
 
 const homeController = require('./controllers/home');
