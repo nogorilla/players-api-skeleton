@@ -21,10 +21,7 @@ const userSchema = new mongoose.Schema({
   last_name: {
     type: String,
     required: [true, 'last name is required'],
-  },
-  players: [
-    { type: mongoose.Schema.Types.ObjectId, ref: 'Player' }
-  ]
+  }
 }, { timestamps: true });
 
 userSchema.pre('save', function save(next) {
@@ -59,9 +56,12 @@ const playerSchema = new mongoose.Schema({
   handedness: {
     type: String,
     enum: ['right', 'left'],
-    default: 'right',
     required: [true, 'Must be right or left handed']
   },
+  created_by: {
+    type: String,
+    require: true
+  }
 }, { timestamps: true });
 
 const Player = mongoose.model('Player', playerSchema);
