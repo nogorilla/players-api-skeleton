@@ -19,6 +19,9 @@ TL;DR:
 4. Send us your code
 5. Win
 
+## Requirements
+Mongodb is required in order to run players-api-skeleton. Install, follow instructions [here](https://docs.mongodb.com/manual/installation/) 
+
 ## Installation
 To install the requried packaged use either:
 if `yarn` is installed, use `yarn install` otherwise use `npm install`  
