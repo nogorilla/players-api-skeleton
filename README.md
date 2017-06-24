@@ -19,6 +19,10 @@ TL;DR:
 4. Send us your code
 5. Win
 
+## Installation
+To install the requried packaged use either:
+if `yarn` is installed, use `yarn install` otherwise use `npm install`  
+
 ## Tests
 
 ```
