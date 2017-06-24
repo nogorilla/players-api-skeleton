@@ -109,8 +109,33 @@ exports.create = (req, res, next) => {
  *   success - [boolean] Success indicator
  */
 exports.delete = (req, res) => {
-  res.json({
-    'controller': 'Player',
-    'method': 'delete'
-  });
+  passport.authenticate('jwt', (err, user, info) => {
+    if (!user) {
+      return res.status(403).json({ 'message': info });
+    }
+    Player.findOne({
+      $and: [{'_id': req.params.id}, {'created_by': user.id}]
+    }, (err, player) => {
+      if (err) {
+        return res.status(404).json({'message': 'player not found'});
+      }
+
+      if (!player) {
+        return res.status(404).json({'message': 'Player not found'});
+      }
+
+      player.remove();
+      return res.status(200).json({'message': 'Player removed'});
+    })
+    // Player.remove({ _id: req.params.id, created_by: user.id}, (err, player) => {
+      // if (err) {
+      //   return res.status(404).json({'message': 'player not found'});
+      // }
+    //   if (!player) {
+    //     return res.status(404).json({'message': 'player not found'})
+    //   }
+
+    //   return res.status(200).json(player);
+    // })
+  })(req, res);
 };
